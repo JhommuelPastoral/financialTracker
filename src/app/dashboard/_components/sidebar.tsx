@@ -23,8 +23,7 @@ import { useSidebar } from "@/components/ui/sidebar"
 const data = {
   navMain: [
     {
-      title: "Getting Started",
-      url: "#",
+      title: "Overview",
       items: [
         {
           title: "Dashboard",
@@ -56,16 +55,16 @@ export default function DashboardSideBar({ ...props }: React.ComponentProps<type
       <SidebarHeader >
         <div className="flex w-full items-center gap-2 justify-center">
           <ChartNoAxesColumn size={20}/>
-          <p className= {open ? "block" : "hidden"}>Zentra</p>
+          <p className= {`${open ? "block" : "hidden"} text-white font-bold`}>Zentra</p>
         </div>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-white">{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              <SidebarMenu className="flex gap-1">
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive} tooltip={item.title} >

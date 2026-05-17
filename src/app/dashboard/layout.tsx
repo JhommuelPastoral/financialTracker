@@ -10,10 +10,12 @@ export default function Layout({children}: {children: React.ReactNode}) {
   return (
     <SidebarProvider>
       <TooltipProvider>
-        <DashboardSideBar />
+        <DashboardSideBar/>
       </TooltipProvider>
-      <SidebarTrigger />
-      <main>
+      <div className="flex bg-black">
+        <SidebarTrigger className="text-white" />
+      </div>
+      <main className="bg-black flex-1">
         <SessionProvider>
           {children}
         </SessionProvider>
