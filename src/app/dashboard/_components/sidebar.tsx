@@ -1,4 +1,7 @@
-import * as React from "react"
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -11,76 +14,81 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { ChartNoAxesColumn } from "lucide-react"
+  useSidebar,
+} from "@/components/ui/sidebar";
+
 import {
+  BookOpen,
+  ChartNoAxesColumn,
   LayoutDashboard,
   Settings,
-  BookOpen,
-} from "lucide-react"
-import { useSidebar } from "@/components/ui/sidebar"
+} from "lucide-react";
 
-const data = {
-  navMain: [
-    {
-      title: "Overview",
-      items: [
-        {
-          title: "Dashboard",
-          url: "#",
-          icon: LayoutDashboard,
-          isActive: true,
-        },
-        {
-          title: "Transactions",
-          url: "#",
-          icon: BookOpen,
-          isActive: false,
-        },
-        {
-          title: "Settings",
-          url: "#",
-          icon: Settings,
-          isActive: false,
-        },
-      ],
-    },
-  ],
-}
+const sidebarItems = [
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Transactions",
+    url: "/dashboard/transactions",
+    icon: BookOpen,
+  },
+  {
+    title: "Settings",
+    url: "/dashboard/settings",
+    icon: Settings,
+  },
+];
 
-export default function DashboardSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {open} = useSidebar();
+export default function DashboardSideBar(props: React.ComponentProps<typeof Sidebar>) {
+  const { open } = useSidebar();
+  const pathname = usePathname();
   return (
     <Sidebar {...props} collapsible="icon">
-      <SidebarHeader >
-        <div className="flex w-full items-center gap-2 justify-center">
-          <ChartNoAxesColumn size={20}/>
-          <p className= {`${open ? "block" : "hidden"} text-white font-bold`}>Zentra</p>
+      <SidebarHeader>
+        <div className="flex items-center justify-center gap-2">
+          <ChartNoAxesColumn size={20} />
+          {open && (
+            <p className="font-bold text-white">
+              Zentra
+            </p>
+          )}
         </div>
       </SidebarHeader>
+
       <SidebarContent>
-        {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel className="text-white">{item.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu className="flex gap-1">
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive} tooltip={item.title} >
-                      <a href={item.url} className="flex items-center gap-2">
-                        <item.icon size={16} />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-white">
+            Overview
+          </SidebarGroupLabel>
+
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-1">
+              {sidebarItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.title}
+                    isActive={pathname === item.url}
+                  >
+                    <Link
+                      href={item.url}
+                      className="flex items-center gap-2"
+                    >
+                      <item.icon size={16} />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
+
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
