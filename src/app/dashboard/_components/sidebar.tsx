@@ -183,7 +183,7 @@ export default function DashboardSideBar(props: React.ComponentProps<typeof Side
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter className={`px-2 pb-3 gap-2 flex`}>
-          <SidebarMenu className={`${open ? "block" : "hidden"} relative overflow-hidden rounded-xl bg-gradient-to-br from-[#9F2D00] to-[#7A2100] p-4 shadow-lg`}>
+          <SidebarMenu className={`${open ? "block" : "hidden"} relative overflow-hidden rounded-[10px] bg-gradient-to-br from-[#9F2D00] to-[#7A2100] p-4 shadow-lg`}>
             {/* Content */}
             <div className="relative flex flex-col gap-3">
               <div className="absolute -bottom-8 -right-8 h-10 w-10 rounded-full bg-white opacity-80 blur-sm" />
