@@ -1,7 +1,26 @@
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth"
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import prisma from "./prisma";
+
+declare module "next-auth" {
+  /**
+   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      /** The user's Role. */
+      role: string
+      /**
+       * By default, TypeScript merges new interface properties and overwrites existing ones.
+       * In this case, the default session user properties will be overwritten,
+       * with the new ones defined above. To keep the default session user properties,
+       * you need to add them back into the newly declared interface.
+       */
+    } & DefaultSession["user"]
+  }
+}
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google, GitHub],
@@ -28,13 +47,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     async jwt({ token, profile, account }) {
-      if (!profile || !account) return token;
+      if (!profile || !account || !profile.email) return token;
       const provider = account.provider;
-
+      const user = await prisma.user.findUnique({ where: { email: profile.email } });
       token.fullName = provider === "google" ? `${profile.given_name} ${profile.family_name}` : profile.name || "";
       token.imageUrl = profile.picture ?? profile.avatar_url as string ?? "";
       token.email = profile.email;
-
+      token.role = user?.role;
       return token;
     },
     async session({ session, token }) {
@@ -43,6 +62,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.name = token.fullName as string;
       session.user.email = token.email as string;
       session.user.image = token.imageUrl as string;
+      session.user.role = token.role as string;
       return session;
     }
   }

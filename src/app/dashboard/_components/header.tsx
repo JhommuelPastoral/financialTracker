@@ -8,6 +8,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar";
+import { Bell } from "lucide-react";
 function normalizePathName(pathname: string): string {
   const path = pathname.split("/").filter(Boolean).slice(-1)[0] || "";
   if (path.length === 0) return "Dashboard";
@@ -23,24 +24,15 @@ export default function Header() {
         <h1 className="text-xl font-bold">{normalizePathName(pathName)}</h1>
         <div>
           <p>Failed To load session</p>
-          []
         </div>
       </header>
     );
   }
   return (
     <header className="text-white w-full flex items-center justify-between">
-      <h1 className="text-xl font-bold">{normalizePathName(pathName)}</h1>
-      <div className="flex items-center gap-2">
-        <Avatar>
-          <AvatarImage src={session?.user?.image || ""} alt="Profile" />
-          <AvatarFallback className="bg-[#9F2D00] text-white text-sm font-bold">{session?.user?.name?.[0] || ""}</AvatarFallback>
-          <AvatarBadge />
-        </Avatar>
-        <div className="text-sm">
-          <p>{session?.user?.name}</p>
-          <p className="text-muted-foreground">asd</p>
-        </div>
+      <div>
+        <h1 className="text-xl font-bold"> {normalizePathName(pathName)}</h1>
+        <p className="text-muted-foreground text-sm">Welcome back, {session.user.name} 👋</p>
       </div>
     </header>
 
