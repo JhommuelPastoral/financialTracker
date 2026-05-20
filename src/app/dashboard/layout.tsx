@@ -1,13 +1,12 @@
 
-"use client";
 
 import { SessionProvider } from "next-auth/react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import DashboardSideBar from "./_components/sidebar";
 import Header from "./_components/header";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
 export default function Layout({children}: {children: React.ReactNode}) {
+
   return (
     <SidebarProvider>
       <SessionProvider>
@@ -18,8 +17,8 @@ export default function Layout({children}: {children: React.ReactNode}) {
           <SidebarTrigger className="text-white" />
         </div>
         <main className="bg-black flex-1 p-2">
-            <Header />
-            {children}
+          <Header />
+          {children}
         </main>
       </SessionProvider>
     </SidebarProvider>
