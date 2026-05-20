@@ -16,9 +16,11 @@ export default function Layout({children}: {children: React.ReactNode}) {
         <div className="flex bg-black">
           <SidebarTrigger className="text-white" />
         </div>
-        <main className="bg-black flex-1 p-2">
-          <Header />
-          {children}
+        <main className="bg-black flex-1 p-2 ">
+          <div className="animate-slide-up">
+            <Header />
+            {children}
+          </div>
         </main>
       </SessionProvider>
     </SidebarProvider>

@@ -54,7 +54,7 @@ export default function Page() {
         {cards.map((item, index) => (
           <div 
             key={index} 
-            className="w-full bg-[#1D1816] border border-white/5 p-5 flex flex-col rounded-2xl gap-4 shadow-lg hover:bg-[#251e1b] transition-colors animate-slide-up"
+            className="w-full bg-[#1D1816] border border-white/5 p-5 flex flex-col rounded-2xl gap-4 shadow-lg hover:bg-[#251e1b] transition-colors "
           >
             {/* Header Row */}
             <div className="flex items-center justify-between">
